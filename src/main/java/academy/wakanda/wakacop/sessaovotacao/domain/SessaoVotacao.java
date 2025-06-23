@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -27,11 +29,15 @@ public class SessaoVotacao {
     private LocalDateTime dataAberturaSessao;
     private LocalDateTime dataEncerramentoSessao;
 
+    @OneToMany(mappedBy = "sessaoVotacao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VotoPauta> votos;
+
     public SessaoVotacao(SessaoAberturaRequest sessaoAberturaRequest, Pauta pauta) {
         this.idPauta = pauta.getId();
         this.tempoDuracaoEmMinutos = sessaoAberturaRequest.getTempoDuracaoEmMinutos().orElse(1);
         this.dataAberturaSessao = LocalDateTime.now();
         this.dataEncerramentoSessao = dataAberturaSessao.plusMinutes(this.tempoDuracaoEmMinutos);
         this.status = StatusSessaoVotacao.ABERTA;
+        votos = new ArrayList<>();
     }
 }

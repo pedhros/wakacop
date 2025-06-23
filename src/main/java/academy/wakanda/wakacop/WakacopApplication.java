@@ -16,9 +16,7 @@ public class WakacopApplication {
 		return "teste home wakacop";
 	}
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(WakacopApplication.class, args);
 	}
-
 }
