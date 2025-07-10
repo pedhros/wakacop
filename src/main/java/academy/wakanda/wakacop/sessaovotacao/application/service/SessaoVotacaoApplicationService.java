@@ -20,7 +20,7 @@ public class SessaoVotacaoApplicationService implements SessaoVotacaoService {
     @Override
     public SessaoAberturaResponse abrirSessaoVotacao(SessaoAberturaRequest sessaoAberturaRequest) {
     log.info("[start] SessaoVotacaoApplicationService - abrirSessaoVotacao");
-        Pauta pauta = pautaService.buscarPautaPorId(sessaoAberturaRequest.getIdPauta());
+        Pauta pauta = pautaService.getPautaPorId(sessaoAberturaRequest.getIdPauta());
         SessaoVotacao sessaoVotacao = sessaoVotacaoRepository.salva(new SessaoVotacao(sessaoAberturaRequest, pauta));
     log.info("[finish] SessaoVotacaoApplicationService - abrirSessaoVotacao");
     return new SessaoAberturaResponse(sessaoVotacao);

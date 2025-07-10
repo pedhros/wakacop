@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface PautaRepository {
     Pauta salva(Pauta pauta);
-    Pauta buscarPorId(UUID idPauta);
+    Pauta buscaPautaPorId(UUID idPauta);
 }
