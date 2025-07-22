@@ -1,6 +1,7 @@
 package academy.wakanda.wakacop.sessaovotacao.domain;
 
 import academy.wakanda.wakacop.pauta.domain.Pauta;
+import academy.wakanda.wakacop.sessaovotacao.application.api.VotoRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,4 +26,11 @@ public class VotoPauta {
     private String cpfAssociado;
     private OpcaoVoto opcaoVoto;
     private LocalDateTime momentoVoto;
+
+    public VotoPauta(SessaoVotacao sessaoVotacao, VotoRequest votoRequest) {
+        this.sessaoVotacao = sessaoVotacao;
+        this.cpfAssociado = votoRequest.getCpfAssociado();
+        this.opcaoVoto = votoRequest.getOpcao();
+        this.momentoVoto = LocalDateTime.now();
+    }
 }
