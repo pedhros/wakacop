@@ -27,8 +27,8 @@ public class SessaoVotacao {
     private Integer tempoDuracaoEmMinutos;
     @Enumerated(EnumType.STRING)
     private StatusSessaoVotacao status;
-    private LocalDateTime dataAberturaSessao;
-    private LocalDateTime dataEncerramentoSessao;
+    private LocalDateTime momentoAberturaSessao;
+    private LocalDateTime momentoEncerramentoSessao;
 
     @OneToMany(
             mappedBy = "sessaoVotacao",
@@ -41,8 +41,8 @@ public class SessaoVotacao {
     public SessaoVotacao(SessaoAberturaRequest sessaoAberturaRequest, Pauta pauta) {
         this.idPauta = pauta.getId();
         this.tempoDuracaoEmMinutos = sessaoAberturaRequest.getTempoDuracaoEmMinutos().orElse(1);
-        this.dataAberturaSessao = LocalDateTime.now();
-        this.dataEncerramentoSessao = dataAberturaSessao.plusMinutes(this.tempoDuracaoEmMinutos);
+        this.momentoAberturaSessao = LocalDateTime.now();
+        this.momentoEncerramentoSessao = momentoAberturaSessao.plusMinutes(this.tempoDuracaoEmMinutos);
         this.status = StatusSessaoVotacao.ABERTA;
         this.votos = new HashMap<>();
     }
@@ -58,13 +58,13 @@ public class SessaoVotacao {
     private void validaSessaoAberta() {
         atualizaStatusSessao();
         if (this.status.equals(StatusSessaoVotacao.FECHADA)) {
-            throw new RuntimeException("Sessão está fechada!");
+            throw new RuntimeException("Sessão Encerrada!");
         }
     }
 
     private void atualizaStatusSessao() {
         if (this.status.equals(StatusSessaoVotacao.ABERTA)) {
-            if (LocalDateTime.now().isAfter(this.dataEncerramentoSessao)) {
+            if (LocalDateTime.now().isAfter(this.momentoEncerramentoSessao)) {
                 fechaSessao();
             }
         }
